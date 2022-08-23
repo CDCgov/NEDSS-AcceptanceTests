@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.cdc.nbs.tests.acceptance</groupId>
+    <artifactId>NBSAcceptanceTests</artifactId>
+    <version>1.0</version>
+    <name>NBS Acceptance Tests</name>
+    <description>These tests use cucumber and XX to perform automated acceptance tests against the NBS System.
+    </description>
+    <url>https://github.com/enquizit/CDC-NBS-AcceptanceTests</url>
+    <inceptionYear>2022</inceptionYear>
+    <licenses>
+        <license>
+            <name>All rights reserved for the CDC</name>
+        </license>
+    </licenses>
+    <organization>
+        <name>CDC</name>
+    </organization>
+    <developers>
+        <developer>
+            <name>Jim Barrows</name>
+            <organization>Enquizit LLC</organization>
+            <email>jbarrows@Enquizit.com</email>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/enquizit/CDC-NBS-AcceptanceTests/issues</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Github</system>
+    </ciManagement>
+    <scm>
+        <url>https://github.com/enquizit/CDC-NBS-AcceptanceTests</url>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/enquizit/CDC-NBS-AcceptanceTests</url>
+        </repository>
+    </distributionManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.5.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
