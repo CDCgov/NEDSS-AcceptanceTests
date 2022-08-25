@@ -24,3 +24,9 @@ hs_err_pid*
 /.idea/
 /target/
 *.iml
+
+
+.vscode/
+node_modules/
+node/
+videos/
