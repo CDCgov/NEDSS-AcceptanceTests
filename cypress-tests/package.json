@@ -1,0 +1,18 @@
+{
+    "name": "cypress-tests",
+    "version": "1.0.0",
+    "description": "NBS Acceptance tests",
+    "main": "index.js",
+    "scripts": {
+        "test": "cypress run --spec \"**/*.feature\""
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "typescript": "^4.7.4",
+        "@types/cypress-cucumber-preprocessor": "^4.0.1",
+        "cypress": "^10.6.0",
+        "cypress-cucumber-preprocessor": "^4.3.1"
+    },
+    "cypress-cucumber-preprocessor": {}
+}
