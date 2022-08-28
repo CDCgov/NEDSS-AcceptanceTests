@@ -21,7 +21,7 @@ export default class PatientSearchResultsPage extends BasePage {
     }
 
     // click the link to the patient details at the provided index
-    clickPatientLink(index: number): Cypress.Chainable {
+    clickPatientLink(index: number): Cypress.Chainable<PatientFilePage> {
         return this.getElement(Selector.RESULTS_TABLE)
             .find('a', { log: this.detailedLogs })
             .then((links) => {
