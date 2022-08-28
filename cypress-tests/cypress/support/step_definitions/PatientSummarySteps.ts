@@ -1,36 +1,28 @@
 /// <reference types="cypress" />
 
-import { After, Before, Given, Then } from 'cypress-cucumber-preprocessor/steps';
-import { AddUserPage } from '../pages/AddUserPage';
-import { EditUserPage } from '../pages/EditUserPage';
-import { UserLogin } from '../utils/UserLogin';
+import { After, Before, Then } from 'cypress-cucumber-preprocessor/steps';
+import PatientSearchPage from '../pages/PatientSearchPage';
+import PatientMother from '../utils/PatientMother';
+import UserMother from '../utils/UserMother';
+import UserUtil from '../utils/UserUtil';
 
 Before(() => {
-    // login as MSA user
-    UserLogin.Login('msa');
-
-    // create data entry user
-    const addUserPage = new AddUserPage();
-    addUserPage.navgiateTo();
-    addUserPage.setUserId('test-clerical');
-    addUserPage.setFirstName('test');
-    addUserPage.setLastName('user');
-    addUserPage.addRole({
-        jurisdiction: 'All',
-        programArea: 'HIV',
-        permissionSet: 'NEDSS Clerical Data Entry',
-        isGuest: false
-    });
-    addUserPage.clickSubmit();
+    UserUtil.login(UserMother.systemAdmin());
+    UserUtil.createOrActivateUser(UserMother.clericalDataEntry());
+    UserUtil.createOrActivateUser(UserMother.supervisor());
 });
 
 After(() => {
-    const editUserPage = new EditUserPage('test-clerical');
-    editUserPage.navgiateTo();
-    editUserPage.setIsActive(false);
-    editUserPage.clickSubmit();
+    // UserUtil.login(UserMother.systemAdmin());
+    // UserUtil.deactivateUser(UserMother.clerical());
+    // UserUtil.deactivateUser(UserMother.supervisor());
 });
 
-Then('I can view the patients summary', () => {
-    // Write code here that turns the phrase above into concrete actions
+Then('I can view the patients summary', async () => {
+    const patient = PatientMother.patient();
+    const patientSearchPage = new PatientSearchPage();
+    const resultsPage = patientSearchPage.searchForPatient(patient);
+    resultsPage.clickPatientLink(0).then((patientFilePage) => {
+        patientFilePage.navgiateTo();
+    });
 });

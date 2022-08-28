@@ -1,12 +1,24 @@
 /// <reference types="cypress" />
-import { Before, Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
+import { Given, When } from 'cypress-cucumber-preprocessor/steps';
+import PatientSearchPage from '../pages/PatientSearchPage';
+import PatientMother from '../utils/PatientMother';
+import PatientUtil from '../utils/PatientUtil';
+import UserMother from '../utils/UserMother';
+import UserUtil from '../utils/UserUtil';
 
-Given(/I am a (.*) user/, (userType: 'data entry' | 'admin') => {});
-
-Given('a patient exists', () => {
-    // Write code here that turns the phrase above into concrete actions
+Given(/I am a (.*) user/, (userType: 'data entry' | 'admin') => {
+    switch (userType) {
+        case 'data entry':
+            UserUtil.login(UserMother.clericalDataEntry());
+            break;
+        case 'admin':
+            UserUtil.login(UserMother.systemAdmin());
+            break;
+    }
 });
 
-When('I search for a patient', () => {
-    // Write code here that turns the phrase above into concrete actions
+Given('a patient exists', () => {
+    UserUtil.login(UserMother.supervisor());
+    const patient = PatientMother.patient();
+    PatientUtil.createPatientIfNotExists(patient);
 });

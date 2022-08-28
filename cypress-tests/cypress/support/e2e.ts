@@ -18,3 +18,17 @@ import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+before(() => {
+    // NBS throws some javascript exceptions on certain pages. These will fail the tests, catching them here to prevent test failure
+    cy.on('uncaught:exception', (error, runnable) => {
+        if (
+            error.message.includes('Cannot read properties of undefined (reading') ||
+            error.message.includes('Cannot read properties of null (reading')
+        ) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+});

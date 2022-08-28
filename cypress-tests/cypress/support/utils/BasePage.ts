@@ -1,31 +1,30 @@
+/// <reference types="cypress" />
 export default abstract class BasePage {
     relativeUrl: string;
-    static baseUrl = 'http://localhost:7001/nbs';
-    detailedLogs = false;
+    baseUrl = Cypress.env('baseUrl');
+    detailedLogs = Cypress.env('detailedLogs');
 
-    constructor(relativeUrl: string, detailedLogs: boolean = false) {
+    constructor(relativeUrl: string) {
         this.relativeUrl = relativeUrl;
-        this.detailedLogs = detailedLogs;
     }
 
     protected getElement(selector: string): Cypress.Chainable {
         return cy.get(selector, { log: this.detailedLogs });
     }
 
-    protected typeValue(selector: string, value: string): void {
-        this.getElement(selector).type(value, { log: this.detailedLogs });
-    }
-
-    protected selectValue(selector: string, value: string): void {
-        this.getElement(selector).select(value, { log: this.detailedLogs, force: true });
+    protected setText(selector: string, value: string): void {
+        if (value.trim().length === 0) {
+            this.getElement(selector).clear({ log: this.detailedLogs });
+        } else {
+            this.getElement(selector).clear({ log: this.detailedLogs }).type(value, { log: this.detailedLogs });
+        }
     }
 
     protected setChecked(selector: string, checked: boolean): void {
-        // fixes issue where calling check / uncheck always toggles state instead of setting it
-        const element = this.getElement(selector);
-        element.then((elem) => {
-            if ((elem as HTMLInputElement)?.checked !== checked) {
-                checked ? element.check({ log: this.detailedLogs }) : element.uncheck({ log: this.detailedLogs });
+        this.getElement(selector).then((results) => {
+            const inputElement = results[0] as HTMLInputElement;
+            if (inputElement.checked !== checked) {
+                inputElement.click();
             }
         });
     }
@@ -34,11 +33,19 @@ export default abstract class BasePage {
         this.getElement(selector).click({ log: this.detailedLogs });
     }
 
+    protected clickFirst(selector: string) {
+        this.getElement(selector).first({ log: this.detailedLogs }).click({ log: this.detailedLogs });
+    }
+
     protected submit(selector: string) {
         this.getElement(selector).submit({ log: this.detailedLogs });
     }
 
+    protected clear(selector: string) {
+        this.getElement(selector).clear({ log: this.detailedLogs });
+    }
+
     public navgiateTo(): void {
-        cy.visit(BasePage.baseUrl + this.relativeUrl);
+        cy.visit(this.baseUrl + this.relativeUrl, { log: this.detailedLogs });
     }
 }
