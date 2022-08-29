@@ -4,8 +4,7 @@ import PatientSearchPage from '../pages/PatientSearchPage';
 export default class PatientUtil {
     public static createPatientIfNotExists(patient: Patient): void {
         const detailedLogs = Cypress.env('detailedLogs');
-        const patientSearchPage = new PatientSearchPage();
-        const searchResultsPage = patientSearchPage.searchForPatient(patient);
+        const searchResultsPage = PatientSearchPage.searchForPatient(patient);
 
         cy.document({ log: detailedLogs }).then((d) => {
             const searchResultCount = d.getElementsByClassName('odd').length + d.getElementsByClassName('even').length;

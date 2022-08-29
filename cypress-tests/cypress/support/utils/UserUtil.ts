@@ -19,6 +19,7 @@ export default class UserUtil {
         const manageUsersPage = new ManageUsersPage();
         manageUsersPage.navgiateTo();
 
+        // examine the page and see if the user exists in the table
         cy.get('table[class=TableInner]', { log: this.detailedLogs })
             .get('a', { log: this.detailedLogs })
             .then((links) => {

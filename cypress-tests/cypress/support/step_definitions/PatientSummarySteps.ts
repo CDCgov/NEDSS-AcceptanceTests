@@ -13,16 +13,16 @@ Before(() => {
 });
 
 After(() => {
-    // UserUtil.login(UserMother.systemAdmin());
-    // UserUtil.deactivateUser(UserMother.clerical());
-    // UserUtil.deactivateUser(UserMother.supervisor());
+    UserUtil.login(UserMother.systemAdmin());
+    UserUtil.deactivateUser(UserMother.clericalDataEntry());
+    UserUtil.deactivateUser(UserMother.supervisor());
 });
 
 Then('I can view the patients summary', async () => {
     const patient = PatientMother.patient();
-    const patientSearchPage = new PatientSearchPage();
-    const resultsPage = patientSearchPage.searchForPatient(patient);
+    const resultsPage = PatientSearchPage.searchForPatient(patient);
     resultsPage.clickPatientLink(0).then((patientFilePage) => {
         patientFilePage.navgiateTo();
+        patientFilePage.assertPatientSummaryExists(patient);
     });
 });

@@ -135,20 +135,21 @@ export default class PatientSearchPage extends BasePage {
         this.clickFirst(Selector.SUBMIT_BUTTON);
     }
 
-    searchForPatient(patient: Patient): PatientSearchResultsPage {
-        this.navgiateTo();
-        this.setLastName(patient.lastName);
-        this.setFirstName(patient.firstName);
-        this.setDateOfBirth(patient.dateOfBirth);
-        this.setCurrentSex(patient.currentSex);
-        this.setStreetAddress(patient.streetAddress);
-        this.setCity(patient.city);
-        this.setState(patient.state);
-        this.setZip(patient.zip);
-        this.setPatientIds(patient.patientIds);
-        this.setEthnicity(patient.ethnicitiy);
-        this.setRace(patient.race);
-        this.clickSubmit();
+    static searchForPatient(patient: Patient): PatientSearchResultsPage {
+        const searchPage = new PatientSearchPage();
+        searchPage.navgiateTo();
+        searchPage.setLastName(patient.lastName);
+        searchPage.setFirstName(patient.firstName);
+        searchPage.setDateOfBirth(patient.dateOfBirth);
+        searchPage.setCurrentSex(patient.currentSex);
+        searchPage.setStreetAddress(patient.streetAddress);
+        searchPage.setCity(patient.city);
+        searchPage.setState(patient.state);
+        searchPage.setZip(patient.zip);
+        searchPage.setPatientIds(patient.patientIds);
+        searchPage.setEthnicity(patient.ethnicitiy);
+        searchPage.setRace(patient.race);
+        searchPage.clickSubmit();
         return new PatientSearchResultsPage();
     }
 }
