@@ -1,4 +1,5 @@
 export class Race {
+    // Value's seem to be from PHIN VADS: https://phinvads.cdc.gov/vads/ViewValueSet.action?id=67D34BBC-617F-DD11-B38D-00188B398520
     private constructor(private readonly key: string, public readonly value: any) {}
 
     static readonly AMERICAN_INDIAN_OR_ALASKA_NATIVE = new Race('American Indian or Alaska Native', '1002-5');

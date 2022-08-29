@@ -25,8 +25,8 @@ export default class PatientSearchResultsPage extends BasePage {
         return this.getElement(Selector.RESULTS_TABLE)
             .find('a', { log: this.detailedLogs })
             .then((links) => {
+                // the displayed patient Id text does not match the uid of the patient, we pull the uid from the href
                 // example href: http://localhost:7001/nbs/PatientSearchResults1.do?ContextAction=ViewFile&uid=10014284
-                // the displayed patient Id text does not match the uid.
                 const href = (links[index] as HTMLAnchorElement).href;
                 const uid = href.substring(href.indexOf('uid=') + 'uid='.length);
                 return new PatientFilePage(uid);
