@@ -1,14 +1,13 @@
 /// <reference types="cypress" />
 export default abstract class BasePage {
     relativeUrl: string;
-    baseUrl = Cypress.env('baseUrl');
     detailedLogs = Cypress.env('detailedLogs');
 
     constructor(relativeUrl: string) {
         this.relativeUrl = relativeUrl;
     }
 
-    protected getElement(selector: string): Cypress.Chainable {
+    protected getElement(selector: string): Cypress.Chainable<JQuery> {
         return cy.get(selector, { log: this.detailedLogs });
     }
 
@@ -46,6 +45,6 @@ export default abstract class BasePage {
     }
 
     public navgiateTo(): void {
-        cy.visit(this.baseUrl + this.relativeUrl, { log: this.detailedLogs });
+        cy.visit(this.relativeUrl, { log: this.detailedLogs });
     }
 }

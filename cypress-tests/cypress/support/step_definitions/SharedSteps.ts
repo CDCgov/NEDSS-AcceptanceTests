@@ -5,25 +5,37 @@ import PatientUtil from '../utils/PatientUtil';
 import UserMother from '../utils/UserMother';
 import UserUtil from '../utils/UserUtil';
 
-Given(/I am a (.*) user/, (userType: 'data entry' | 'admin' | 'supervisor') => {
+Given(/I am a (.*) user/, (userType: 'data entry' | 'admin' | 'supervisor' | 'registry manager') => {
     switch (userType) {
         case 'data entry':
-            UserUtil.login(UserMother.systemAdmin());
-            UserUtil.createOrActivateUser(UserMother.clericalDataEntry());
+            UserUtil.login(UserMother.systemAdmin()).then(() => {
+                UserUtil.createOrActivateUser(UserMother.clericalDataEntry());
+            });
             UserUtil.login(UserMother.clericalDataEntry());
             break;
         case 'admin':
             UserUtil.login(UserMother.systemAdmin());
             break;
         case 'supervisor':
-            UserUtil.login(UserMother.systemAdmin());
-            UserUtil.createOrActivateUser(UserMother.supervisor());
+            UserUtil.login(UserMother.systemAdmin()).then(() => {
+                UserUtil.createOrActivateUser(UserMother.supervisor());
+            });
             UserUtil.login(UserMother.supervisor());
+            break;
+        case 'registry manager':
+            UserUtil.login(UserMother.systemAdmin()).then(() => {
+                UserUtil.createOrActivateUser(UserMother.registryManager());
+            });
+            UserUtil.login(UserMother.registryManager());
             break;
     }
 });
 
 Given(/a patient exists/, () => {
-    UserUtil.login(UserMother.supervisor());
-    PatientUtil.createPatientIfNotExists(PatientMother.patient());
+    UserUtil.login(UserMother.systemAdmin()).then(() => {
+        UserUtil.createOrActivateUser(UserMother.supervisor());
+    });
+    UserUtil.login(UserMother.supervisor()).then(() => {
+        PatientUtil.createPatientIfNotExists(PatientMother.patient());
+    });
 });

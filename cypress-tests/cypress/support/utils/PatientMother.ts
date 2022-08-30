@@ -41,4 +41,8 @@ export default class PatientMother {
             ...overrides
         };
     }
+
+    public static duplicatedPatient(): Patient {
+        return PatientMother.patient({ firstName: 'Johnathan', streetAddress: '1234 Another Road' });
+    }
 }

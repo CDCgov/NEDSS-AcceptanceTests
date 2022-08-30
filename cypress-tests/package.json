@@ -4,7 +4,8 @@
     "description": "NBS Acceptance tests",
     "main": "index.js",
     "scripts": {
-        "test": "cypress run --spec \"**/*.feature\""
+        "test": "cypress run --spec \"**/*.feature\"",
+        "cypress": "npx cypress open"
     },
     "author": "",
     "license": "ISC",
@@ -14,7 +15,5 @@
         "cypress": "^10.6.0",
         "cypress-cucumber-preprocessor": "^4.3.1"
     },
-    "cypress-cucumber-preprocessor": {
-       
-    }
+    "cypress-cucumber-preprocessor": {}
 }

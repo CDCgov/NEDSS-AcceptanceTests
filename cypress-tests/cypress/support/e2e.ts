@@ -1,20 +1,9 @@
-// ***********************************************************
-// This example support/e2e.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
-
 // Import commands.js using ES2015 syntax:
 import './commands';
+import PatientMother from './utils/PatientMother';
+import PatientUtil from './utils/PatientUtil';
+import UserMother from './utils/UserMother';
+import UserUtil from './utils/UserUtil';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -26,5 +15,23 @@ beforeEach(() => {
             error.message.includes('Cannot read properties of undefined (reading') ||
             error.message.includes('Cannot read properties of null (reading')
         );
+    });
+});
+
+// clean up test created data
+after(() => {
+    UserUtil.login(UserMother.systemAdmin()).then(() => {
+        UserUtil.createOrActivateUser(UserMother.supervisor());
+    });
+
+    UserUtil.login(UserMother.supervisor()).then(() => {
+        PatientUtil.deletePatientIfExists(PatientMother.patient());
+        PatientUtil.deletePatientIfExists(PatientMother.duplicatedPatient());
+    });
+
+    UserUtil.login(UserMother.systemAdmin()).then(() => {
+        UserUtil.deactivateUser(UserMother.clericalDataEntry());
+        UserUtil.deactivateUser(UserMother.registryManager());
+        UserUtil.deactivateUser(UserMother.supervisor());
     });
 });

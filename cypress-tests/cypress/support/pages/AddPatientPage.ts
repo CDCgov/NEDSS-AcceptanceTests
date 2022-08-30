@@ -3,6 +3,7 @@ import { Identification } from '../models/Patient';
 import { Race } from '../models/enums/Race';
 import { Suffix } from '../models/enums/Suffix';
 import BasePage from '../utils/BasePage';
+import DateUtil from '../utils/DateUtil';
 
 enum Selector {
     AS_OF_DATE = 'input[name=patientAsOfDateGeneral]',
@@ -75,21 +76,9 @@ export default class AddPatientPage extends BasePage {
     }
 
     setDob(dob: Date): void {
-        let monthString: string;
-        let dayString: string;
-        if (dob.getMonth() + 1 < 10) {
-            monthString = '0' + (dob.getMonth() + 1).toString();
-        } else {
-            monthString = (dob.getMonth() + 1).toString();
-        }
-
-        if (dob.getDate() < 10) {
-            dayString = '0' + dob.getDate().toString();
-        } else {
-            dayString = dob.getDate().toString();
-        }
+        const dateString = DateUtil.getNBSFormattedDate(dob);
         // the page is weird and inserts the '/' for you
-        this.setText(Selector.DOB, `${monthString}${dayString}${dob.getFullYear()}`);
+        this.setText(Selector.DOB, dateString.replace(/\//g, ''));
     }
 
     setCurrentSex(currentSex: 'Female' | 'Male' | 'Unknown'): void {

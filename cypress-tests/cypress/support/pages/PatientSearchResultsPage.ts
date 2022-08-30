@@ -20,8 +20,15 @@ export default class PatientSearchResultsPage extends BasePage {
         return new AddPatientPage();
     }
 
-    // click the link to the patient details at the provided index
-    clickPatientLink(index: number): Cypress.Chainable<PatientFilePage> {
+    getResultsCount(): Cypress.Chainable<number> {
+        return this.getElement(Selector.RESULTS_TABLE).then((table) => {
+            const htmlTable = table[0] as HTMLTableElement;
+            // get count of tr, if the table is empty there is a single tr with class of 'empty'
+            return htmlTable.rows[0].classList.contains('empty') ? 0 : htmlTable.rows.length;
+        });
+    }
+
+    getPatientFilePage(index: number): Cypress.Chainable<PatientFilePage> {
         return this.getElement(Selector.RESULTS_TABLE)
             .find('a', { log: this.detailedLogs })
             .then((links) => {

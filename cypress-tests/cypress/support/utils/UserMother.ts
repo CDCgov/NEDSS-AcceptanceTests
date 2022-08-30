@@ -22,6 +22,25 @@ export default class UserMother {
         };
     }
 
+    public static registryManager(): User {
+        return {
+            userId: 'test-registry-manager',
+            firstName: 'test',
+            lastName: 'registry-manager',
+            isMasterSecurityAdmin: false,
+            programAreaAdministrator: false,
+            programAreas: [ProgramArea.STD],
+            roles: [
+                {
+                    jurisdiction: 'All',
+                    programArea: ProgramArea.STD,
+                    permissionSet: PermissionSet.NEDSS_REGISTRY_MANAGER,
+                    isGuest: false
+                }
+            ]
+        };
+    }
+
     public static supervisor(): User {
         return {
             userId: 'test-supervisor',

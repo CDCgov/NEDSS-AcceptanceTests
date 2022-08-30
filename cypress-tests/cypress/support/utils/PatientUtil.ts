@@ -40,11 +40,15 @@ export default class PatientUtil {
         });
     }
 
-    public static deletePatient(patient: Patient): void {
+    public static deletePatientIfExists(patient: Patient): void {
         const resultsPage = PatientSearchPage.searchForPatient(patient);
-        resultsPage.clickPatientLink(0).then((patientFilePage) => {
-            patientFilePage.navgiateTo();
-            patientFilePage.clickDelete();
+        resultsPage.getResultsCount().then((count) => {
+            if (count > 0) {
+                resultsPage.getPatientFilePage(0).then((patientFilePage) => {
+                    patientFilePage.navgiateTo();
+                    patientFilePage.clickDelete();
+                });
+            }
         });
     }
 }

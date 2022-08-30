@@ -5,14 +5,13 @@ import ManageUsersPage from '../pages/ManageUsersPage';
 
 export default class UserUtil {
     private static detailedLogs = Cypress.env('detailedLogs');
-    private static baseUrl = Cypress.env('baseUrl');
 
-    public static login(user: User): void {
-        cy.visit(`${this.baseUrl}/nfc?UserName=${user.userId}`, { log: this.detailedLogs });
+    public static login(user: User): Cypress.Chainable {
+        return cy.visit(`/nfc?UserName=${user.userId}`, { log: this.detailedLogs });
     }
 
     public static logout(): void {
-        cy.visit(`${this.baseUrl}/logOut`, { log: this.detailedLogs });
+        cy.visit(`/logOut`, { log: this.detailedLogs });
     }
 
     public static createOrActivateUser(user: User): void {
