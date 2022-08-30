@@ -39,4 +39,12 @@ export default class PatientUtil {
             }
         });
     }
+
+    public static deletePatient(patient: Patient): void {
+        const resultsPage = PatientSearchPage.searchForPatient(patient);
+        resultsPage.clickPatientLink(0).then((patientFilePage) => {
+            patientFilePage.navgiateTo();
+            patientFilePage.clickDelete();
+        });
+    }
 }

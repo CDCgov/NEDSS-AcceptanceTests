@@ -33,8 +33,8 @@ export default abstract class BasePage {
         this.getElement(selector).click({ log: this.detailedLogs });
     }
 
-    protected clickFirst(selector: string) {
-        this.getElement(selector).first({ log: this.detailedLogs }).click({ log: this.detailedLogs });
+    protected clickFirst(selector: string): Cypress.Chainable {
+        return this.getElement(selector).first({ log: this.detailedLogs }).click({ log: this.detailedLogs });
     }
 
     protected submit(selector: string) {

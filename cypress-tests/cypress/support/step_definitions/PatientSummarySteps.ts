@@ -1,24 +1,25 @@
 /// <reference types="cypress" />
 
-import { After, Before, Then } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
+import MergePatientSearchPage from '../pages/MergePatientSearchPage';
 import PatientSearchPage from '../pages/PatientSearchPage';
 import PatientMother from '../utils/PatientMother';
+import PatientUtil from '../utils/PatientUtil';
 import UserMother from '../utils/UserMother';
 import UserUtil from '../utils/UserUtil';
 
-Before(() => {
-    UserUtil.login(UserMother.systemAdmin());
-    UserUtil.createOrActivateUser(UserMother.clericalDataEntry());
-    UserUtil.createOrActivateUser(UserMother.supervisor());
-});
+after(() => {
+    // clean up patients
+    UserUtil.login(UserMother.supervisor());
+    PatientUtil.deletePatient(PatientMother.patient());
 
-After(() => {
+    // clean up users
     UserUtil.login(UserMother.systemAdmin());
     UserUtil.deactivateUser(UserMother.clericalDataEntry());
     UserUtil.deactivateUser(UserMother.supervisor());
 });
 
-Then('I can view the patients summary', async () => {
+Then(/I can view a patient's summary/, async () => {
     const patient = PatientMother.patient();
     const resultsPage = PatientSearchPage.searchForPatient(patient);
     resultsPage.clickPatientLink(0).then((patientFilePage) => {

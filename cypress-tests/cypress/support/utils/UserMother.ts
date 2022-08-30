@@ -28,7 +28,7 @@ export default class UserMother {
             firstName: 'test',
             lastName: 'supervisor',
             isMasterSecurityAdmin: false,
-            programAreaAdministrator: true,
+            programAreaAdministrator: false,
             programAreas: [ProgramArea.STD],
             roles: [
                 {
