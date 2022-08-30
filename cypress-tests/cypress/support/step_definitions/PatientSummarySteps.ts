@@ -1,7 +1,6 @@
 /// <reference types="cypress" />
 
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
-import MergePatientSearchPage from '../pages/MergePatientSearchPage';
 import PatientSearchPage from '../pages/PatientSearchPage';
 import PatientMother from '../utils/PatientMother';
 import PatientUtil from '../utils/PatientUtil';
