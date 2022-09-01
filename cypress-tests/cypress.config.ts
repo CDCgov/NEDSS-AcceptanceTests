@@ -2,7 +2,8 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
     env: {
-        detailedLogs: false
+        detailedLogs: false,
+        cleanUp: true
     },
     e2e: {
         setupNodeEvents(on, config) {

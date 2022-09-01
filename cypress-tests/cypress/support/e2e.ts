@@ -20,18 +20,30 @@ beforeEach(() => {
 
 // clean up test created data
 after(() => {
-    UserUtil.login(UserMother.systemAdmin()).then(() => {
-        UserUtil.createOrActivateUser(UserMother.supervisor());
-    });
-
-    UserUtil.login(UserMother.supervisor()).then(() => {
-        PatientUtil.deletePatientIfExists(PatientMother.patient());
-        PatientUtil.deletePatientIfExists(PatientMother.duplicatedPatient());
-    });
-
-    UserUtil.login(UserMother.systemAdmin()).then(() => {
-        UserUtil.deactivateUser(UserMother.clericalDataEntry());
-        UserUtil.deactivateUser(UserMother.registryManager());
-        UserUtil.deactivateUser(UserMother.supervisor());
-    });
+    if (Cypress.env('cleanUp')) {
+        UserUtil.login(UserMother.systemAdmin()).then(() => {
+            UserUtil.createOrActivateUser(UserMother.supervisor());
+        });
+        UserUtil.login(UserMother.supervisor()).then(() => {
+            PatientUtil.deletePatientIfExists(PatientMother.patient());
+            PatientUtil.deletePatientIfExists(PatientMother.duplicatedPatient());
+        });
+        UserUtil.login(UserMother.systemAdmin()).then(() => {
+            UserUtil.getUserState(UserMother.clericalDataEntry()).then((userState) => {
+                if (userState === 'Active') {
+                    UserUtil.deactivateUser(UserMother.clericalDataEntry());
+                }
+            });
+            UserUtil.getUserState(UserMother.registryManager()).then((userState) => {
+                if (userState === 'Active') {
+                    UserUtil.deactivateUser(UserMother.registryManager());
+                }
+            });
+            UserUtil.getUserState(UserMother.supervisor()).then((userState) => {
+                if (userState === 'Active') {
+                    UserUtil.deactivateUser(UserMother.supervisor());
+                }
+            });
+        });
+    }
 });
