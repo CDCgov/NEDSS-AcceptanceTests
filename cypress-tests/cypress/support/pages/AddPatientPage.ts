@@ -2,8 +2,9 @@ import { MaritalStatus } from '../models/enums/MaritalStatus';
 import { Identification } from '../models/Patient';
 import { Race } from '../models/enums/Race';
 import { Suffix } from '../models/enums/Suffix';
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 import DateUtil from '../utils/DateUtil';
+import { State } from '../models/enums/State';
 
 enum Selector {
     AS_OF_DATE = 'input[name=patientAsOfDateGeneral]',
@@ -109,7 +110,7 @@ export default class AddPatientPage extends BasePage {
         this.setText(Selector.CITY, city);
     }
 
-    setState(state: string): void {
+    setState(state: State): void {
         this.setText(Selector.STATE, state);
     }
 

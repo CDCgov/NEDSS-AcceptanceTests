@@ -1,5 +1,5 @@
 import Patient from '../models/Patient';
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 
 enum Selector {
     PATIENT_SUMMARY_TABLE = 'div[id=subsect_basicInfo] table[id=Summary_summary]',

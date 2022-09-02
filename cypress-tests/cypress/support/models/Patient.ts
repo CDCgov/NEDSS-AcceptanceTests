@@ -1,7 +1,11 @@
-import { IdentificationType } from './enums/IdentificationType';
+import { PatientIdentificationType } from './enums/PatientIdentificationType';
 import { MaritalStatus } from './enums/MaritalStatus';
 import { Race } from './enums/Race';
 import { Suffix } from './enums/Suffix';
+import { Ethnicity } from './enums/Ethnicity';
+import { Deceased } from './enums/Deceased';
+import { Sex } from './enums/Sex';
+import { State } from './enums/State';
 
 export default interface Patient {
     firstName: string;
@@ -10,12 +14,12 @@ export default interface Patient {
     suffix: Suffix;
     maritalStatus: MaritalStatus;
     dateOfBirth: Date;
-    currentSex: 'Male' | 'Female' | 'Unknown';
-    birthSex: 'Male' | 'Female' | 'Unknown';
-    deceased: 'Yes' | 'No' | 'Unknown' | '';
+    currentSex: Sex;
+    birthSex: Sex;
+    deceased: Deceased;
     streetAddress: string;
     city: string;
-    state: string;
+    state: State;
     zip: string;
     county: string;
     country: string;
@@ -26,13 +30,13 @@ export default interface Patient {
     workPhoneExtension: string;
     cellPhone: string;
     email: string;
-    ethnicitiy: 'Hispanic or Latino' | 'Not Hispanic or Latino' | '';
+    ethnicitiy: Ethnicity;
     race: Race;
     identifications: Identification[];
 }
 
 export interface Identification {
-    identificationType: IdentificationType;
+    identificationType: PatientIdentificationType;
     idNumber: string;
     assigningAuthority: string;
 }

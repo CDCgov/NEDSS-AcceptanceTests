@@ -1,5 +1,5 @@
 import Patient from '../models/Patient';
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 import DateUtil from '../utils/DateUtil';
 
 enum Selector {

@@ -1,4 +1,5 @@
 export default class DateUtil {
+    // MM/dd/yyyy
     static getNBSFormattedDate(date: Date): string {
         const month = date.getMonth() + 1;
         let monthString = month < 10 ? '0' + month : month.toString();

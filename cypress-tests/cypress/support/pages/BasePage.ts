@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+
 export default abstract class BasePage {
     relativeUrl: string;
     detailedLogs = Cypress.env('detailedLogs');
@@ -26,6 +27,10 @@ export default abstract class BasePage {
                 inputElement.click();
             }
         });
+    }
+
+    protected select(selector: string, selection: string[], options?: Partial<Cypress.SelectOptions>): void {
+        this.getElement(selector).select(selection, { log: this.detailedLogs, ...options });
     }
 
     protected click(selector: string) {

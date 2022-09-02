@@ -1,4 +1,4 @@
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 import PatientComparePage from './PatientComparePage';
 
 enum Selector {
