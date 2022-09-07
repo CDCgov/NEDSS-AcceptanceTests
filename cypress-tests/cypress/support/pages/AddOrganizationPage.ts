@@ -41,7 +41,7 @@ export default class AddOrganizationPage extends BasePage {
         super('/OrgSearchResults1.do?ContextAction=Add');
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         throw new Error(
             'Unable to navigate directly to add organization page. Please search for an organization first'
         );

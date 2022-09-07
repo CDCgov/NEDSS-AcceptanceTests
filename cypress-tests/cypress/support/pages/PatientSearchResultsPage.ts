@@ -11,7 +11,7 @@ export default class PatientSearchResultsPage extends BasePage {
         super('/FindPatient2.do?ContextAction=Submit');
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         throw new Error('Unable to navigate to search results directly');
     }
 

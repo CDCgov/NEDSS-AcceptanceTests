@@ -8,7 +8,7 @@ export default abstract class BasePage {
         this.relativeUrl = relativeUrl;
     }
 
-    protected getElement(selector: string): Cypress.Chainable<JQuery> {
+    protected getElement(selector: string): Cypress.Chainable<JQuery<HTMLElement>> {
         return cy.get(selector, { log: this.detailedLogs });
     }
 
@@ -49,7 +49,7 @@ export default abstract class BasePage {
         this.getElement(selector).clear({ log: this.detailedLogs });
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         cy.visit(this.relativeUrl, { log: this.detailedLogs });
     }
 }

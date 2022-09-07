@@ -31,7 +31,7 @@ export default interface Patient {
     cellPhone: string;
     email: string;
     ethnicitiy: Ethnicity;
-    race: Race;
+    races: [Race];
     identifications: Identification[];
 }
 

@@ -9,7 +9,7 @@ export default class OrganizationSearchResultsPage extends BasePage {
         super('/FindOrganization1.do');
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         throw new Error(
             'Unable to navigate directly to results page. Please submit a search using OrganizationSearchPage'
         );

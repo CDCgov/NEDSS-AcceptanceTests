@@ -140,7 +140,7 @@ export default class PatientSearchPage extends BasePage {
 
     static searchForPatient(patient: Patient): PatientSearchResultsPage {
         const searchPage = new PatientSearchPage();
-        searchPage.navgiateTo();
+        searchPage.navigateTo();
         searchPage.setLastName(patient.lastName);
         searchPage.setFirstName(patient.firstName);
         searchPage.setDateOfBirth(patient.dateOfBirth);
@@ -151,7 +151,7 @@ export default class PatientSearchPage extends BasePage {
         searchPage.setZip(patient.zip);
         searchPage.setPatientIds(patient.patientIds);
         searchPage.setEthnicity(patient.ethnicitiy);
-        searchPage.setRace(patient.race);
+        searchPage.setRace(patient.races[0]);
         searchPage.clickSubmit();
         return new PatientSearchResultsPage();
     }

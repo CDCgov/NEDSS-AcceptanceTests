@@ -11,7 +11,7 @@ export default class MergePatientSearchResultsPage extends BasePage {
         super('/FindPatient3.do?Mode1=ManualMerge');
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         throw new Error('Unable to navigate directly to search results page');
     }
 

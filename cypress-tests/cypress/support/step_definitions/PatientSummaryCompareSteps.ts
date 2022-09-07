@@ -20,7 +20,7 @@ Given(/A duplicated patient exists/, () => {
 
 When(/I compare merge candidates/, () => {
     const mergeSearchPage = new MergePatientSearchPage();
-    mergeSearchPage.navgiateTo();
+    mergeSearchPage.navigateTo();
     mergeSearchPage.setLastName(PatientMother.patient().lastName);
     const mergeSearchResultsPage = mergeSearchPage.clickSubmit();
     comparePage = mergeSearchResultsPage.compareFirstTwo();
@@ -28,7 +28,7 @@ When(/I compare merge candidates/, () => {
 
 Then(/I can view both patient summaries/, () => {
     comparePage.then((comparePatientPage) => {
-        comparePatientPage.navgiateTo();
+        comparePatientPage.navigateTo();
         comparePatientPage.assertPatientDataIsDisplayed(PatientMother.patient(), PatientMother.duplicatedPatient());
     });
 });

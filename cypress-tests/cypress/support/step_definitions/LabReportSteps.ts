@@ -1,25 +1,40 @@
 import { Then, When } from 'cypress-cucumber-preprocessor/steps';
-import { CodedResult } from '../models/enums/CodedResult';
-import { ResultedTest } from '../models/enums/ResultedTest';
-import AddLabReportPage from '../pages/AddLabReportPage';
-import OrganizationMother from '../utils/OrganizationMother';
+import LabReport from '../models/LabReport';
+import HomePage, { Queue } from '../pages/HomePage';
+import DateUtil from '../utils/DateUtil';
+import LabReportMother from '../utils/LabReportMother';
+import LabReportUtil from '../utils/LabReportUtil';
+
+const detailedLogs = Cypress.env('detailedLogs');
 
 When(/I create a lab report/, () => {
-    const addLabReportPage = new AddLabReportPage();
-    addLabReportPage.navgiateTo();
-    cy.wait(100);
-    addLabReportPage.setActiveTab('LabReport').then(() => {
-        addLabReportPage.setReportingFacility(OrganizationMother.emoryHospital());
-        addLabReportPage.setResultedTest(ResultedTest.ACID_FAST_STAIN);
-        addLabReportPage.setCodedResult(CodedResult.ABNORMAL);
-        addLabReportPage.clickAddResultedTest();
-        cy.wait(3000);
-        addLabReportPage.clickSubmit();
-    });
+    const report = LabReportMother.acidFastStain();
+    cy.wrap(report, { log: detailedLogs }).as('report');
+    LabReportUtil.createLabReportForPatient(report);
 });
 
-When(/a lab report is created/, () => {});
-
-Then(/The lab report is created successfully/, () => {});
-
-Then(/I can view the lab report in my queue/, () => {});
+Then(/I can view the report in the (.*) queue/, (queue: Queue) => {
+    const homePage = new HomePage();
+    homePage.navigateTo();
+    switch (queue) {
+        case Queue.DOCUMENTS_REQUIRING_REVIEW:
+            homePage.clickDocumentsRequiringReview().then((queuePage) => {
+                cy.get('@report', { log: detailedLogs }).then((wrappedReport) => {
+                    const report = wrappedReport as unknown as LabReport;
+                    const table = queuePage.getResultsTable();
+                    table.should('contain', 'Lab Report');
+                    table.should('contain', report.reportingFacility.name);
+                    table.should('contain', report.patient.firstName);
+                    table.should('contain', report.patient.lastName);
+                    table.should('contain', DateUtil.getNBSFormattedDate(report.patient.dateOfBirth, true));
+                    report.resultedTests.forEach((test) => {
+                        table.should('contain', test.test);
+                    });
+                    table.should('contain', report.jurisdiction);
+                });
+            });
+            break;
+        default:
+            throw new Error('NYI for queue: ' + queue);
+    }
+});

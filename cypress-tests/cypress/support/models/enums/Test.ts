@@ -1,4 +1,4 @@
-export enum ResultedTest {
+export enum Test {
     ACID_FAST_STAIN = 'Acid-Fast Stain',
     AEROBIC_BACTERIA_IDENTIFIED = 'AEROBIC BACTERIA IDENTIFIED',
     AMOEBA_IDENTIFIED = 'AMOEBA IDENTIFIED',

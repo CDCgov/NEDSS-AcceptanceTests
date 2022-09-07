@@ -34,7 +34,7 @@ export default class PatientMother {
             homePhone: '123-456-7890',
             email: 'JohnDoe@email.com',
             ethnicitiy: Ethnicity.NOT_HISPANIC_OR_LATINO,
-            race: Race.WHITE,
+            races: [Race.WHITE],
             identifications: [
                 {
                     identificationType: PatientIdentificationType.DRIVERS_LICENSE_NUMBER,
