@@ -16,7 +16,7 @@ export default class UserUtil {
 
     public static getUserState(user: User): Cypress.Chainable<'Active' | 'Inactive' | 'Null'> {
         const manageUsersPage = new ManageUsersPage();
-        manageUsersPage.navgiateTo();
+        manageUsersPage.navigateTo();
         return cy
             .get('table[class=TableInner]', { log: this.detailedLogs })
             .get('a', { log: this.detailedLogs })
@@ -33,18 +33,18 @@ export default class UserUtil {
 
     public static createOrActivateUser(user: User): void {
         const manageUsersPage = new ManageUsersPage();
-        manageUsersPage.navgiateTo();
+        manageUsersPage.navigateTo();
         this.getUserState(user).then((userState) => {
             if (userState === 'Inactive') {
                 const editUserPage = new EditUserPage(user.userId);
-                editUserPage.navgiateTo();
+                editUserPage.navigateTo();
                 editUserPage.setIsActive(true);
                 editUserPage.clickSubmit();
             }
             if (userState === 'Null') {
                 // create user
                 const addUserPage = new AddUserPage();
-                addUserPage.navgiateTo();
+                addUserPage.navigateTo();
                 addUserPage.setUserId(user.userId);
                 addUserPage.setFirstName(user.firstName);
                 addUserPage.setLastName(user.lastName);
@@ -56,7 +56,7 @@ export default class UserUtil {
 
     public static deactivateUser(user: User): void {
         const editUserPage = new EditUserPage(user.userId);
-        editUserPage.navgiateTo();
+        editUserPage.navigateTo();
         editUserPage.setIsActive(false);
         editUserPage.clickSubmit();
     }

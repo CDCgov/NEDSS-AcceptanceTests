@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import { Role } from '../models/User';
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 
 enum Selector {
     USER_ID = 'input[id=userProfile\\.theUser_s\\.userID]',

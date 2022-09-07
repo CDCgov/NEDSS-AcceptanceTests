@@ -1,5 +1,5 @@
 import Patient from '../models/Patient';
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 import DateUtil from '../utils/DateUtil';
 
 enum Selector {
@@ -14,7 +14,7 @@ export default class PatientComparePage extends BasePage {
         const compareTable = this.getElement(Selector.COMPARE_TABLE);
         // Patient1 info
         compareTable.should('contain', `${patient1.firstName} ${patient1.middleName} ${patient1.lastName}`);
-        compareTable.should('contain', DateUtil.getNBSFormattedDate(patient1.dateOfBirth));
+        compareTable.should('contain', DateUtil.getNBSFormattedDate(patient1.dateOfBirth, true));
         compareTable.should('contain', patient1.streetAddress);
         compareTable.should('contain', patient1.cellPhone);
         compareTable.should('contain', patient1.homePhone);
@@ -23,7 +23,7 @@ export default class PatientComparePage extends BasePage {
 
         // Patient 2 info
         compareTable.should('contain', `${patient2.firstName} ${patient2.middleName} ${patient2.lastName}`);
-        compareTable.should('contain', DateUtil.getNBSFormattedDate(patient2.dateOfBirth));
+        compareTable.should('contain', DateUtil.getNBSFormattedDate(patient2.dateOfBirth, true));
         compareTable.should('contain', patient2.streetAddress);
         compareTable.should('contain', patient2.cellPhone);
         compareTable.should('contain', patient2.homePhone);

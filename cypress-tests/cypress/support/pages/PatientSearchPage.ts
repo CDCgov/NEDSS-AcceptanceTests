@@ -1,7 +1,10 @@
-import BasePage from '../utils/BasePage';
-import { IdentificationType } from '../models/enums/IdentificationType';
+import { AddressOperator, DobOperator, NameOperator } from '../models/enums/Operators';
+import { PatientIdentificationType } from '../models/enums/PatientIdentificationType';
 import { Race } from '../models/enums/Race';
+import { Sex } from '../models/enums/Sex';
+import { State } from '../models/enums/State';
 import Patient from '../models/Patient';
+import BasePage from './BasePage';
 import PatientSearchResultsPage from './PatientSearchResultsPage';
 
 enum Selector {
@@ -39,7 +42,7 @@ export default class PatientSearchPage extends BasePage {
         super('/MyTaskList1.do?ContextAction=GlobalPatient');
     }
 
-    setLastNameOperator(operator: 'Starts With' | 'Contains' | 'Equal' | 'Not Equal' | 'Sounds Like'): void {
+    setLastNameOperator(operator: NameOperator): void {
         this.setText(Selector.LAST_NAME_OPERATOR, operator);
     }
 
@@ -47,7 +50,7 @@ export default class PatientSearchPage extends BasePage {
         this.setText(Selector.LAST_NAME, lastName);
     }
 
-    setFirstNameOperator(operator: 'Starts With' | 'Contains' | 'Equal' | 'Not Equal' | 'Sounds Like'): void {
+    setFirstNameOperator(operator: NameOperator): void {
         this.setText(Selector.FIRST_NAME_OPERATOR, operator);
     }
 
@@ -55,7 +58,7 @@ export default class PatientSearchPage extends BasePage {
         this.setText(Selector.FIRST_NAME, firstName);
     }
 
-    setDobOperator(operator: 'Equal' | 'Between'): void {
+    setDobOperator(operator: DobOperator): void {
         this.setText(Selector.DOB_OPERATOR, operator);
     }
 
@@ -73,11 +76,11 @@ export default class PatientSearchPage extends BasePage {
         this.setText(Selector.DOB_BETWEEN_TO, toString);
     }
 
-    setCurrentSex(sex: 'Male' | 'Female' | 'Unknown' | ''): void {
+    setCurrentSex(sex: Sex): void {
         this.setText(Selector.CURRENT_SEX, sex);
     }
 
-    setStreetAddressOperator(operator: 'Contains' | 'Equal' | 'Not Equal'): void {
+    setStreetAddressOperator(operator: AddressOperator): void {
         this.setText(Selector.STREET_ADDRESS_OPERATOR, operator);
     }
 
@@ -85,7 +88,7 @@ export default class PatientSearchPage extends BasePage {
         this.setText(Selector.STREET_ADDRESS, streetAddress);
     }
 
-    setCityOperator(operator: 'Contains' | 'Equal' | 'Not Equal'): void {
+    setCityOperator(operator: AddressOperator): void {
         this.setText(Selector.CITY_OPERATOR, operator);
     }
 
@@ -93,7 +96,7 @@ export default class PatientSearchPage extends BasePage {
         this.setText(Selector.CITY, city);
     }
 
-    setState(state: string): void {
+    setState(state: State): void {
         this.setText(Selector.STATE, state);
     }
 
@@ -107,7 +110,7 @@ export default class PatientSearchPage extends BasePage {
         }
     }
 
-    setIdType(idType: IdentificationType): void {
+    setIdType(idType: PatientIdentificationType): void {
         this.setText(Selector.ID_TYPE, idType.toString());
     }
 
@@ -137,7 +140,7 @@ export default class PatientSearchPage extends BasePage {
 
     static searchForPatient(patient: Patient): PatientSearchResultsPage {
         const searchPage = new PatientSearchPage();
-        searchPage.navgiateTo();
+        searchPage.navigateTo();
         searchPage.setLastName(patient.lastName);
         searchPage.setFirstName(patient.firstName);
         searchPage.setDateOfBirth(patient.dateOfBirth);
@@ -148,7 +151,7 @@ export default class PatientSearchPage extends BasePage {
         searchPage.setZip(patient.zip);
         searchPage.setPatientIds(patient.patientIds);
         searchPage.setEthnicity(patient.ethnicitiy);
-        searchPage.setRace(patient.race);
+        searchPage.setRace(patient.races[0]);
         searchPage.clickSubmit();
         return new PatientSearchResultsPage();
     }

@@ -1,4 +1,4 @@
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 import AddPatientPage from './AddPatientPage';
 import { PatientFilePage } from './PatientFilePage';
 
@@ -11,7 +11,7 @@ export default class PatientSearchResultsPage extends BasePage {
         super('/FindPatient2.do?ContextAction=Submit');
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         throw new Error('Unable to navigate to search results directly');
     }
 

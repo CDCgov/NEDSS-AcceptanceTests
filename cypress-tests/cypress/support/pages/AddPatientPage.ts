@@ -2,8 +2,9 @@ import { MaritalStatus } from '../models/enums/MaritalStatus';
 import { Identification } from '../models/Patient';
 import { Race } from '../models/enums/Race';
 import { Suffix } from '../models/enums/Suffix';
-import BasePage from '../utils/BasePage';
+import BasePage from './BasePage';
 import DateUtil from '../utils/DateUtil';
+import { State } from '../models/enums/State';
 
 enum Selector {
     AS_OF_DATE = 'input[name=patientAsOfDateGeneral]',
@@ -51,7 +52,7 @@ export default class AddPatientPage extends BasePage {
         super('/PatientSearchResults1.do?ContextAction=Add');
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         throw new Error('NBS does not allow direct navigation to add patient page');
     }
 
@@ -76,9 +77,7 @@ export default class AddPatientPage extends BasePage {
     }
 
     setDob(dob: Date): void {
-        const dateString = DateUtil.getNBSFormattedDate(dob);
-        // the page is weird and inserts the '/' for you
-        this.setText(Selector.DOB, dateString.replace(/\//g, ''));
+        this.setText(Selector.DOB, DateUtil.getNBSFormattedDate(dob, false));
     }
 
     setCurrentSex(currentSex: 'Female' | 'Male' | 'Unknown'): void {
@@ -109,7 +108,7 @@ export default class AddPatientPage extends BasePage {
         this.setText(Selector.CITY, city);
     }
 
-    setState(state: string): void {
+    setState(state: State): void {
         this.setText(Selector.STATE, state);
     }
 
@@ -167,37 +166,39 @@ export default class AddPatientPage extends BasePage {
         ];
         raceCheckBoxes.forEach((cb) => this.setChecked(cb, false));
     }
-    setRace(race: Race): void {
+    setRaces(races: Race[]): void {
         this.clearRaceCheckboxes();
-        switch (race) {
-            case Race.AMERICAN_INDIAN_OR_ALASKA_NATIVE:
-                this.setChecked(Selector.RACE_AMERICAN_INDIAN_OR_ALASKA_NATIVE, true);
-                break;
-            case Race.ASIAN:
-                this.setChecked(Selector.RACE_ASIAN, true);
-                break;
-            case Race.BLACK_OR_AFRICAN_AMERICAN:
-                this.setChecked(Selector.RACE_BLACK_OR_AFRICAN_AMERICAN, true);
-                break;
-            case Race.NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER:
-                this.setChecked(Selector.RACE_NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER, true);
-                break;
-            case Race.NOT_ASKED:
-                this.setChecked(Selector.RACE_NOT_ASKED, true);
-                break;
-            case Race.OTHER:
-                this.setChecked(Selector.RACE_OTHER, true);
-                break;
-            case Race.REFUSED_TO_ANSWER:
-                this.setChecked(Selector.RACE_REFUSED_TO_ANSWER, true);
-                break;
-            case Race.UNKNOWN:
-                this.setChecked(Selector.RACE_UNKNOWN, true);
-                break;
-            case Race.WHITE:
-                this.setChecked(Selector.RACE_WHITE, true);
-                break;
-        }
+        races.forEach((race) => {
+            switch (race) {
+                case Race.AMERICAN_INDIAN_OR_ALASKA_NATIVE:
+                    this.setChecked(Selector.RACE_AMERICAN_INDIAN_OR_ALASKA_NATIVE, true);
+                    break;
+                case Race.ASIAN:
+                    this.setChecked(Selector.RACE_ASIAN, true);
+                    break;
+                case Race.BLACK_OR_AFRICAN_AMERICAN:
+                    this.setChecked(Selector.RACE_BLACK_OR_AFRICAN_AMERICAN, true);
+                    break;
+                case Race.NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER:
+                    this.setChecked(Selector.RACE_NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER, true);
+                    break;
+                case Race.NOT_ASKED:
+                    this.setChecked(Selector.RACE_NOT_ASKED, true);
+                    break;
+                case Race.OTHER:
+                    this.setChecked(Selector.RACE_OTHER, true);
+                    break;
+                case Race.REFUSED_TO_ANSWER:
+                    this.setChecked(Selector.RACE_REFUSED_TO_ANSWER, true);
+                    break;
+                case Race.UNKNOWN:
+                    this.setChecked(Selector.RACE_UNKNOWN, true);
+                    break;
+                case Race.WHITE:
+                    this.setChecked(Selector.RACE_WHITE, true);
+                    break;
+            }
+        });
     }
 
     private clearIdentifications(): void {

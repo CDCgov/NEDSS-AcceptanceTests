@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+
 export default abstract class BasePage {
     relativeUrl: string;
     detailedLogs = Cypress.env('detailedLogs');
@@ -7,7 +8,7 @@ export default abstract class BasePage {
         this.relativeUrl = relativeUrl;
     }
 
-    protected getElement(selector: string): Cypress.Chainable<JQuery> {
+    protected getElement(selector: string): Cypress.Chainable<JQuery<HTMLElement>> {
         return cy.get(selector, { log: this.detailedLogs });
     }
 
@@ -28,6 +29,10 @@ export default abstract class BasePage {
         });
     }
 
+    protected select(selector: string, selection: string[], options?: Partial<Cypress.SelectOptions>): void {
+        this.getElement(selector).select(selection, { log: this.detailedLogs, ...options });
+    }
+
     protected click(selector: string) {
         this.getElement(selector).click({ log: this.detailedLogs });
     }
@@ -44,7 +49,7 @@ export default abstract class BasePage {
         this.getElement(selector).clear({ log: this.detailedLogs });
     }
 
-    public navgiateTo(): void {
+    public navigateTo(): void {
         cy.visit(this.relativeUrl, { log: this.detailedLogs });
     }
 }
