@@ -9,7 +9,7 @@ import UserUtil from './utils/UserUtil';
 // require('./commands')
 
 beforeEach(() => {
-    // NBS throws some javascript exceptions on certain pages. These will fail the tests, catching them here to prevent test failure
+    // NBS throws some javascript exceptions on certain pages. Catching them here prevents failure
     cy.on('uncaught:exception', (error, runnable) => {
         return !(
             error.message.includes('Cannot read properties of undefined (reading') ||
@@ -20,7 +20,7 @@ beforeEach(() => {
 
 // clean up test created data
 after(() => {
-    if (Cypress.env('cleanUp')) {
+    if (Cypress.env('cleanup')) {
         UserUtil.login(UserMother.systemAdmin()).then(() => {
             UserUtil.createOrActivateUser(UserMother.supervisor());
         });
