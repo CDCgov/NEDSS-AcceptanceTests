@@ -8,7 +8,6 @@ When('I do a {string} search for {string}', (searchType: 'short' | 'long', searc
     drugSearchPage.setSearchType(searchType);
     // trying to get the Examples table to use literal \ is a pain. workaround here
     if (searchText === 'backslash') {
-        console.log('backslash found');
         searchText = '\\';
     }
     drugSearchPage.setSearchText(searchText);
