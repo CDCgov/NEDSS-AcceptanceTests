@@ -14,9 +14,6 @@ export interface SystemEntry {
     recipient: string;
     transfer: string;
 }
-export interface SystemEntryError {
-    message: string;
-}
 enum Selector {
     ADD_NEW_SYSTEM_BUTTON = 'input[id=submitCr]',
     SYSTEMS_TABLE = 'table[class=dtTable] tbody'
@@ -29,8 +26,6 @@ export default class ManageSystemsPage extends BasePage {
     getSystemsTable(): Cypress.Chainable<JQuery<HTMLElement>> {
         return this.getElement(Selector.SYSTEMS_TABLE);
     }
-
-    getSystemDetailsTable() {}
 
     clickAddNewSystem(): AddSystemPage {
         this.click(Selector.ADD_NEW_SYSTEM_BUTTON);
