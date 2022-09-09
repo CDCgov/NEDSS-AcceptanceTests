@@ -60,6 +60,25 @@ export default class UserMother {
         };
     }
 
+    public static elrImporter(): User {
+        return {
+            userId: 'test-elr-importer',
+            firstName: 'Elr',
+            lastName: 'Importer',
+            isMasterSecurityAdmin: false,
+            programAreaAdministrator: false,
+            programAreas: [],
+            roles: [
+                {
+                    jurisdiction: 'All',
+                    programArea: ProgramArea.ARBO,
+                    permissionSet: PermissionSet.ELR_IMPORTER,
+                    isGuest: false
+                }
+            ]
+        };
+    }
+
     public static systemAdmin(): User {
         return {
             userId: 'msa',

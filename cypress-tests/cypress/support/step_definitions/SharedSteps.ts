@@ -5,7 +5,7 @@ import PatientUtil from '../utils/PatientUtil';
 import UserMother from '../utils/UserMother';
 import UserUtil from '../utils/UserUtil';
 
-Given(/I am a (.*) user/, (userType: 'data entry' | 'admin' | 'supervisor' | 'registry manager') => {
+Given(/I am a (.*) user/, (userType: 'data entry' | 'admin' | 'supervisor' | 'registry manager' | 'ELR Importer') => {
     switch (userType) {
         case 'data entry':
             UserUtil.login(UserMother.systemAdmin()).then(() => {
@@ -28,6 +28,14 @@ Given(/I am a (.*) user/, (userType: 'data entry' | 'admin' | 'supervisor' | 're
             });
             UserUtil.login(UserMother.registryManager());
             break;
+        case 'ELR Importer':
+            UserUtil.login(UserMother.systemAdmin()).then(() => {
+                UserUtil.createOrActivateUser(UserMother.elrImporter());
+            });
+            UserUtil.login(UserMother.elrImporter());
+            break;
+        default:
+            throw new Error('Unsupported user: ' + userType);
     }
 });
 
