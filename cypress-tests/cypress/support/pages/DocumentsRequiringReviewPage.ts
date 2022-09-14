@@ -1,5 +1,3 @@
-import LabReport from '../models/LabReport';
-import DateUtil from '../utils/DateUtil';
 import BasePage from './BasePage';
 
 enum Selector {
