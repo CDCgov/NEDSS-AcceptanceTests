@@ -22,6 +22,7 @@ When(/I compare merge candidates/, () => {
     const mergeSearchPage = new MergePatientSearchPage();
     mergeSearchPage.navigateTo();
     mergeSearchPage.setLastName(PatientMother.patient().lastName);
+    mergeSearchPage.setFirstName(PatientMother.patient().firstName);
     const mergeSearchResultsPage = mergeSearchPage.clickSubmit();
     comparePage = mergeSearchResultsPage.compareFirstTwo();
 });

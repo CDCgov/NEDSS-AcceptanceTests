@@ -3,6 +3,7 @@ import MergePatientSearchResultsPage from './MergePatientSearchResultsPage';
 
 enum Selector {
     LAST_NAME = 'input[name=personSearch\\.lastName]',
+    FIRST_NAME = 'input[name=personSearch\\.firstName]',
     SUBMIT_BUTTON = 'input[name=Submit]'
 }
 export default class MergePatientSearchPage extends BasePage {
@@ -12,6 +13,10 @@ export default class MergePatientSearchPage extends BasePage {
 
     setLastName(lastName: string): void {
         this.setText(Selector.LAST_NAME, lastName);
+    }
+
+    setFirstName(firstName: string): void {
+        this.setText(Selector.FIRST_NAME, firstName);
     }
 
     clickSubmit(): MergePatientSearchResultsPage {
