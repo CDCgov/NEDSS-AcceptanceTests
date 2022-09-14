@@ -1,7 +1,7 @@
 import User from '../models/User';
-import { AddUserPage } from '../pages/AddUserPage';
-import { EditUserPage } from '../pages/EditUserPage';
-import ManageUsersPage from '../pages/ManageUsersPage';
+import ManageUsersPage from '../pages/system-management/security-management/ManageUsersPage';
+import { AddUserPage } from '../pages/system-management/security-management/AddUserPage';
+import { EditUserPage } from '../pages/system-management/security-management/EditUserPage';
 
 export default class UserUtil {
     private static detailedLogs = Cypress.env('detailedLogs');

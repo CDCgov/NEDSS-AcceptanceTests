@@ -44,6 +44,11 @@ after(() => {
                     UserUtil.deactivateUser(UserMother.supervisor());
                 }
             });
+            UserUtil.getUserState(UserMother.elrImporter()).then((userState) => {
+                if (userState === 'Active') {
+                    UserUtil.deactivateUser(UserMother.elrImporter());
+                }
+            });
         });
     }
 });

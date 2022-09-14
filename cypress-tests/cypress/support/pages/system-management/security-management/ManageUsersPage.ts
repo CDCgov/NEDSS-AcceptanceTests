@@ -1,4 +1,4 @@
-import BasePage from './BasePage';
+import BasePage from '../../BasePage';
 
 export default class ManageUsersPage extends BasePage {
     constructor() {
