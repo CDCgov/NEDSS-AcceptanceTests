@@ -57,7 +57,7 @@ Then(/I can view the (.*) system details/, (systemType: SystemType) => {
         expect(displayedSystem.reportType).equal(system.reportType);
         expect(displayedSystem.displayName).equal(system.displayName);
         expect(displayedSystem.applicationName).equal(encode(system.applicationName));
-        expect(displayedSystem.facilityName).equal(system.facilityName);
+        expect(displayedSystem.facilityName).equal(encode(system.facilityName));
         expect(displayedSystem.sender).equal(system.sendingSystem);
         expect(displayedSystem.recipient).equal(system.receivingSystem ?? '');
         expect(displayedSystem.transfer).equal(system.allowsTransfers ?? '');
@@ -96,7 +96,7 @@ function getSystemByType(type: SystemType): System {
             return SystemMother.caseReportSystem({
                 applicationName: '\\&<>\'" EDITED APPLICATION NAME',
                 applicationOid: '7865',
-                facilityName: 'EDITED FACILITY NAME',
+                facilityName: 'EDITEDFN',
                 facilityOid: '019283',
                 facilityDescription: 'EDITED FACILITY DESCRIPTION',
                 sendingSystem: 'No',
@@ -109,7 +109,7 @@ function getSystemByType(type: SystemType): System {
             return SystemMother.labReportSystem({
                 applicationName: '\\&<>\'" EDITED APPLICATION NAME',
                 applicationOid: '0000000',
-                facilityName: 'EDITED FACILITY NAME',
+                facilityName: 'EDITEDFN',
                 facilityOid: '67676767',
                 facilityDescription: 'EDITED FACILITY DESCRIPTION',
                 sendingSystem: 'No',
