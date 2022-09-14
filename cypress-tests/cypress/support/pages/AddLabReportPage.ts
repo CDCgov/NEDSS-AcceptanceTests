@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { CodedResult } from '../models/enums/CodedResult';
+import CodedResult from '../models/enums/CodedResult';
 import { CollectionSite } from '../models/enums/CollectionSite';
 import { Deceased } from '../models/enums/Deceased';
 import { Ethnicity } from '../models/enums/Ethnicity';
@@ -12,7 +12,7 @@ import { Sex } from '../models/enums/Sex';
 import { SpecimenSource } from '../models/enums/SpecimenSource';
 import { State } from '../models/enums/State';
 import { Suffix } from '../models/enums/Suffix';
-import { Test } from '../models/enums/Test';
+import Test from '../models/enums/Test';
 import { PatientStatus } from '../models/LabReport';
 import Organization from '../models/Organization';
 import DateUtil from '../utils/DateUtil';
@@ -128,11 +128,11 @@ export default class AddLabReportPage extends BasePage {
         this.activeTab = activeTab;
         if (activeTab === 'Patient') {
             return this.clickFirst(Selector.PATIENT_TAB)
-                .get(Selector.FIRST_NAME, { log: this.detailedLogs })
+                .get(Selector.FIRST_NAME, this.defaultOptions)
                 .should('be.visible');
         } else {
             return this.clickFirst(Selector.LAB_REPORT_TAB)
-                .get(Selector.REPORTING_FACILITY_QUICK_CODE, { log: this.detailedLogs })
+                .get(Selector.REPORTING_FACILITY_QUICK_CODE, this.defaultOptions)
                 .should('be.visible');
         }
     }
@@ -328,7 +328,7 @@ export default class AddLabReportPage extends BasePage {
     }
 
     setOrderedTest(orderedTest: Test): void {
-        this.setText(Selector.ORDERED_TEST, orderedTest);
+        this.setText(Selector.ORDERED_TEST, orderedTest.description);
     }
 
     setAccessionNumber(accessionNumber: string): void {
@@ -353,11 +353,11 @@ export default class AddLabReportPage extends BasePage {
     }
 
     setResultedTest(test: Test): void {
-        this.setText(Selector.RESULTED_TEST, test);
+        this.setText(Selector.RESULTED_TEST, test.description);
     }
 
     setCodedResult(result: CodedResult): void {
-        this.setText(Selector.CODED_RESULT, result);
+        this.setText(Selector.CODED_RESULT, result.description);
     }
 
     setNumericResult(numericResult: string): void {
@@ -397,8 +397,8 @@ export default class AddLabReportPage extends BasePage {
     }
 
     public navigateTo(): void {
-        cy.visit(this.relativeUrl, { log: this.detailedLogs });
+        cy.visit(this.relativeUrl, this.defaultOptions);
         // The page takes a moment before the tabs are ready
-        cy.wait(100, { log: this.detailedLogs });
+        cy.wait(100, this.defaultOptions);
     }
 }

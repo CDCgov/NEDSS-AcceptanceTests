@@ -4,22 +4,22 @@ import { AddUserPage } from '../pages/system-management/security-management/AddU
 import { EditUserPage } from '../pages/system-management/security-management/EditUserPage';
 
 export default class UserUtil {
-    private static detailedLogs = Cypress.env('detailedLogs');
+    private static defaultOptions = { log: Cypress.env('detailedLogs') };
 
     public static login(user: User): Cypress.Chainable {
-        return cy.visit(`/nfc?UserName=${user.userId}`, { log: this.detailedLogs });
+        return cy.visit(`/nfc?UserName=${user.userId}`, this.defaultOptions);
     }
 
     public static logout(): void {
-        cy.visit(`/logOut`, { log: this.detailedLogs });
+        cy.visit(`/logOut`, this.defaultOptions);
     }
 
     public static getUserState(user: User): Cypress.Chainable<'Active' | 'Inactive' | 'Null'> {
         const manageUsersPage = new ManageUsersPage();
         manageUsersPage.navigateTo();
         return cy
-            .get('table[class=TableInner]', { log: this.detailedLogs })
-            .get('a', { log: this.detailedLogs })
+            .get('table[class=TableInner]', this.defaultOptions)
+            .get('a', this.defaultOptions)
             .then((links) => {
                 for (let link of links) {
                     if (link.text === user.userId) {

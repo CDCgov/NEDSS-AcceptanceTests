@@ -1,13 +1,12 @@
 import { Then, When } from 'cypress-cucumber-preprocessor/steps';
+import { SystemType } from '../models/enums/SystemType';
 import System from '../models/System';
 import AddSystemPage from '../pages/system-management/messaging-management/AddSystemPage';
 import ManageSystemsPage from '../pages/system-management/messaging-management/ManageSystemsPage';
 import SystemMother from '../utils/SystemMother';
 
-enum SystemType {
-    CASE_REPORT = 'Case Report',
+enum EditedSystemType {
     EDITED_CASE_REPORT = 'edited Case Report',
-    LABORATORY_REPORT = 'Laboratory Report',
     EDITED_LABORATORY_REPORT = 'edited Laboratory Report'
 }
 When(/I create a new (.*) system/, (systemType: SystemType) => {
@@ -34,8 +33,8 @@ When(/I create a new (.*) system/, (systemType: SystemType) => {
 When(/I make changes to the (.*) system/, (systemType: SystemType.CASE_REPORT | SystemType.LABORATORY_REPORT) => {
     const systemWithEdits =
         systemType === SystemType.CASE_REPORT
-            ? getSystemByType(SystemType.EDITED_CASE_REPORT)
-            : getSystemByType(SystemType.EDITED_LABORATORY_REPORT);
+            ? getSystemByType(EditedSystemType.EDITED_CASE_REPORT)
+            : getSystemByType(EditedSystemType.EDITED_LABORATORY_REPORT);
     const manageSystemsPage = new ManageSystemsPage();
     manageSystemsPage.navigateTo();
     manageSystemsPage.clickEditSystem(systemWithEdits.displayName).then((editSystemPage) => {
@@ -44,7 +43,7 @@ When(/I make changes to the (.*) system/, (systemType: SystemType.CASE_REPORT | 
     });
 });
 
-Then(/I can view the (.*) system details/, (systemType: SystemType) => {
+Then(/I can view the (.*) system details/, (systemType: SystemType | EditedSystemType) => {
     const manageSystemsPage = new ManageSystemsPage();
     manageSystemsPage.navigateTo();
     manageSystemsPage.getDisplayedSystems().then((systems) => {
@@ -88,11 +87,11 @@ function encode(original: string): string {
     return original.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function getSystemByType(type: SystemType): System {
+function getSystemByType(type: SystemType | EditedSystemType): System {
     switch (type) {
         case SystemType.CASE_REPORT:
             return SystemMother.caseReportSystem();
-        case SystemType.EDITED_CASE_REPORT:
+        case EditedSystemType.EDITED_CASE_REPORT:
             return SystemMother.caseReportSystem({
                 applicationName: '\\&<>\'" EDITED APPLICATION NAME',
                 applicationOid: '7865',
@@ -105,7 +104,7 @@ function getSystemByType(type: SystemType): System {
             });
         case SystemType.LABORATORY_REPORT:
             return SystemMother.labReportSystem();
-        case SystemType.EDITED_LABORATORY_REPORT:
+        case EditedSystemType.EDITED_LABORATORY_REPORT:
             return SystemMother.labReportSystem({
                 applicationName: '\\&<>\'" EDITED APPLICATION NAME',
                 applicationOid: '0000000',

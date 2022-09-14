@@ -10,9 +10,9 @@ export default class ViewSystemPage extends BasePage {
 
     private getRowContent(index: number): Cypress.Chainable<JQuery<HTMLElement>> {
         return this.getElement(Selector.SYSTEM_DETAILS_TABLE_ROWS)
-            .eq(index, { log: this.detailedLogs })
-            .find('td', { log: this.detailedLogs })
-            .eq(1, { log: this.detailedLogs });
+            .eq(index, this.defaultOptions)
+            .find('td', this.defaultOptions)
+            .eq(1, this.defaultOptions);
     }
 
     getReportType(): Cypress.Chainable<JQuery<HTMLElement>> {

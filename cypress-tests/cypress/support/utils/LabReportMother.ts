@@ -1,6 +1,6 @@
-import { CodedResult } from '../models/enums/CodedResult';
+import CodedResult from '../models/enums/CodedResult';
 import { ProgramArea } from '../models/enums/ProgramArea';
-import { Test } from '../models/enums/Test';
+import Test from '../models/enums/Test';
 import LabReport from '../models/LabReport';
 import Patient from '../models/Patient';
 import OrganizationMother from './OrganizationMother';

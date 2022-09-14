@@ -30,7 +30,7 @@ export default class PatientSearchResultsPage extends BasePage {
 
     getPatientFilePage(index: number): Cypress.Chainable<PatientFilePage> {
         return this.getElement(Selector.RESULTS_TABLE)
-            .find('a', { log: this.detailedLogs })
+            .find('a', this.defaultOptions)
             .then((links) => {
                 // the displayed patient Id text does not match the uid of the patient, we pull the uid from the href
                 // example href: http://localhost:7001/nbs/PatientSearchResults1.do?ContextAction=ViewFile&uid=10014284

@@ -55,7 +55,7 @@ export default class EditSystemPage extends BasePage {
 
     setReceivingSystem(receivingSystem: 'No' | 'Yes'): void {
         this.setText(Selector.RECEIVING_SYSTEM, receivingSystem);
-        this.getElement(Selector.RECEIVING_SYSTEM).blur({ log: this.detailedLogs });
+        this.blur(Selector.RECEIVING_SYSTEM);
     }
 
     setAllowsTransfers(allowsTransfers: 'No' | 'Yes'): void {

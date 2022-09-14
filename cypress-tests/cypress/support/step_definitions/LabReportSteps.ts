@@ -27,8 +27,8 @@ Then(/I can view the report in the (.*) queue/, (queue: Queue) => {
                     table.should('contain', report.patient.firstName);
                     table.should('contain', report.patient.lastName);
                     table.should('contain', DateUtil.getNBSFormattedDate(report.patient.dateOfBirth, true));
-                    report.resultedTests.forEach((test) => {
-                        table.should('contain', test.test);
+                    report.resultedTests.forEach((resultedTest) => {
+                        table.should('contain', resultedTest.test.description);
                     });
                     table.should('contain', report.jurisdiction);
                 });

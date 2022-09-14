@@ -202,7 +202,7 @@ export default class AddPatientPage extends BasePage {
     }
 
     private clearIdentifications(): void {
-        cy.document({ log: this.detailedLogs }).then((document) => {
+        cy.document(this.defaultOptions).then((document) => {
             const idDeleteButtons = document.querySelectorAll('input[id^=deleteIdSubSection]');
             idDeleteButtons.forEach((btn) => {
                 const inputElem = btn as HTMLInputElement;

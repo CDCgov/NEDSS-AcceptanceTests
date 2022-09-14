@@ -58,7 +58,7 @@ export class PatientFilePage extends BasePage {
                     }
                 }
             }
-            return cy.wrap(labReportLinks);
+            return cy.wrap(labReportLinks, this.defaultOptions);
         });
     }
 }

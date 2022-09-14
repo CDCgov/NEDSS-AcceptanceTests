@@ -74,15 +74,15 @@ export default class LabReportUtil {
             addLabReportPage.setPatientStatusAtCollection(labReport.orderedTest.patientStatusAtCollection);
         }
 
-        labReport.resultedTests.forEach((test) => {
-            addLabReportPage.setResultedTest(test.test);
-            addLabReportPage.setCodedResult(test.codedResults);
-            addLabReportPage.setNumericResult(test.numericResult ?? '');
-            addLabReportPage.setTextResults(test.textResult ?? '');
-            addLabReportPage.setReferenceRangeFrom(test.referenceRangeFrom ?? '');
-            addLabReportPage.setReferenceRangeTo(test.referenceRangeTo ?? '');
-            addLabReportPage.setResultedTestStatus(test.status ?? '');
-            addLabReportPage.setResultsComment(test.comments ?? '');
+        labReport.resultedTests.forEach((resultedTest) => {
+            addLabReportPage.setResultedTest(resultedTest.test);
+            addLabReportPage.setCodedResult(resultedTest.codedResults);
+            addLabReportPage.setNumericResult(resultedTest.numericResult ?? '');
+            addLabReportPage.setTextResults(resultedTest.textResult ?? '');
+            addLabReportPage.setReferenceRangeFrom(resultedTest.referenceRangeFrom ?? '');
+            addLabReportPage.setReferenceRangeTo(resultedTest.referenceRangeTo ?? '');
+            addLabReportPage.setResultedTestStatus(resultedTest.status ?? '');
+            addLabReportPage.setResultsComment(resultedTest.comments ?? '');
             addLabReportPage.clickAddResultedTest();
         });
 

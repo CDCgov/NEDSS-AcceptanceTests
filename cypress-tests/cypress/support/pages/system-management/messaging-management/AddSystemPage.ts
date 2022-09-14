@@ -17,8 +17,8 @@ enum Selector {
     SUBMIT_BUTTON = 'input[name=submitCrSub]'
 }
 export default class AddSystemPage extends BasePage {
-    constructor(relativeUrl = '/ReceivingSystem.do?method=createLoadRecFacility&exportReceivingFacilityUid#expAlg') {
-        super(relativeUrl);
+    constructor() {
+        super('/ReceivingSystem.do?method=createLoadRecFacility&exportReceivingFacilityUid#expAlg');
     }
 
     setReportType(reportType: 'Case Report' | 'Laboratory Report'): void {
@@ -55,7 +55,7 @@ export default class AddSystemPage extends BasePage {
 
     setReceivingSystem(receivingSystem: 'No' | 'Yes'): void {
         this.setText(Selector.RECEIVING_SYSTEM, receivingSystem);
-        this.getElement(Selector.RECEIVING_SYSTEM).blur({ log: this.detailedLogs });
+        this.blur(Selector.RECEIVING_SYSTEM);
     }
 
     setAllowsTransfers(allowsTransfers: 'No' | 'Yes'): void {

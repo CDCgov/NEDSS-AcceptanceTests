@@ -1,8 +1,8 @@
-import { CodedResult } from './enums/CodedResult';
+import CodedResult from './enums/CodedResult';
 import { CollectionSite } from './enums/CollectionSite';
 import { ProgramArea } from './enums/ProgramArea';
 import { SpecimenSource } from './enums/SpecimenSource';
-import { Test } from './enums/Test';
+import Test from './enums/Test';
 import Organization from './Organization';
 import Patient from './Patient';
 

@@ -17,7 +17,7 @@ export default class HomePage extends BasePage {
     clickDocumentsRequiringReview(): Cypress.Chainable<DocumentRequiringReviewPage> {
         return this.getElement(Selector.MY_QUEUES)
             .contains(Queue.DOCUMENTS_REQUIRING_REVIEW)
-            .click({ log: this.detailedLogs })
+            .click(this.defaultOptions)
             .then(() => {
                 return new DocumentRequiringReviewPage();
             });

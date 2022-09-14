@@ -17,18 +17,18 @@ export default class MergePatientSearchResultsPage extends BasePage {
 
     compareFirstTwo(): Cypress.Chainable<PatientComparePage> {
         return this.getElement(Selector.SEARCH_RESULTS_TABLE)
-            .find(Selector.COMPARE_CHECKBOX, { log: this.detailedLogs })
+            .find(Selector.COMPARE_CHECKBOX, this.defaultOptions)
             .then((compareBoxes) => {
                 compareBoxes[0].click();
                 compareBoxes[1].click();
                 // this opens in a new window. to prevent that we stub the window.open method
-                return cy.window({ log: this.detailedLogs }).then((win) => {
+                return cy.window(this.defaultOptions).then((win) => {
                     cy.stub(win, 'open').as('open');
 
                     // trigger the method call
                     return this.clickFirst(Selector.COMPARE_BUTTON).then(() => {
                         // get the stubbed method
-                        cy.get('@open', { log: this.detailedLogs }).then((open) => {
+                        cy.get('@open', this.defaultOptions).then((open) => {
                             let stub = open as unknown as Cypress.Agent<sinon.SinonStub>;
                             // get the URL that was passed to window.open
                             const fullUrl = stub.getCalls()[0].args[0];
