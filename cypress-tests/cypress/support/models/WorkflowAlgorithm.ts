@@ -20,7 +20,7 @@ export default class WorkflowAlgorithm {
     investigationDefaultValues?: InvestigationDefaultValue[];
 
     // lab report specific
-    logicMode?: 'ANY' | 'ALL';
+    logicMode?: 'OR' | 'AND';
     labCriteria?: LabCriteria[];
     timeFrame?: TimeFrame;
 }

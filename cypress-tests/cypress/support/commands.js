@@ -1,25 +1,18 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+/// <reference types="cypress" />
+
+// This overrides the default logging cypress does to hide the XHR requests that spam the window
+// Cypress issue: https://github.com/cypress-io/cypress/issues/7362
+const origLog = Cypress.log;
+const detailedLogs = Cypress.env('detailedLogs');
+Cypress.log = function (opts, ...other) {
+    if (
+        !detailedLogs &&
+        (opts.displayName === 'script' ||
+            opts.name === 'request' ||
+            opts.name?.indexOf('uncaught exception') > -1 ||
+            opts.name?.indexOf('xhr') > -1)
+    ) {
+        return;
+    }
+    return origLog(opts, ...other);
+};

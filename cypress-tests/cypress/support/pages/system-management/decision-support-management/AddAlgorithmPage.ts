@@ -252,11 +252,11 @@ export default class AddAlgorithmPage extends BasePage {
         this.setText(Selector.INVESTIGATION_DEFAULT_BEHAVIOR, behavior);
     }
 
-    setLogicMode(logicMode?: 'ANY' | 'ALL'): void {
-        if (logicMode === 'ALL') {
-            this.click(Selector.LAB_CRITERIA_LOGIC_ALL);
-        } else if (logicMode === 'ANY') {
+    setLogicMode(logicMode?: 'OR' | 'AND'): void {
+        if (logicMode === 'OR') {
             this.click(Selector.LAB_CRITERIA_LOGIC_ANY);
+        } else if (logicMode === 'AND') {
+            this.click(Selector.LAB_CRITERIA_LOGIC_ALL);
         }
     }
 

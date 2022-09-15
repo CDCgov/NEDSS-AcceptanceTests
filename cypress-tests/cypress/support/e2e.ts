@@ -5,9 +5,6 @@ import PatientUtil from './utils/PatientUtil';
 import UserMother from './utils/UserMother';
 import UserUtil from './utils/UserUtil';
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-
 beforeEach(() => {
     // NBS throws some javascript exceptions on certain pages. Catching them here prevents failure
     cy.on('uncaught:exception', (error, runnable) => {

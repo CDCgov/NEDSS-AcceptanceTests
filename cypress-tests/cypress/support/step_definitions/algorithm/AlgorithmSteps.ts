@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { SystemType } from '../models/enums/SystemType';
-import WorkflowAlgorithm from '../models/WorkflowAlgorithm';
-import AddAlgorithmPage from '../pages/system-management/decision-support-management/AddAlgorithmPage';
-import ManageAlgorithmsPage from '../pages/system-management/decision-support-management/ManageAlgorithmsPage';
-import WorkflowAlgorithmMother from '../utils/WorkflowAlgorithmMother';
+import { SystemType } from '../../models/enums/SystemType';
+import WorkflowAlgorithm from '../../models/WorkflowAlgorithm';
+import AddAlgorithmPage from '../../pages/system-management/decision-support-management/AddAlgorithmPage';
+import ManageAlgorithmsPage from '../../pages/system-management/decision-support-management/ManageAlgorithmsPage';
+import ViewAlgorithmPage from '../../pages/system-management/decision-support-management/ViewAlgorithmPage';
+import WorkflowAlgorithmMother from '../../utils/WorkflowAlgorithmMother';
 
 enum EditedSystemType {
     EDITED_CASE_REPORT = 'edited Case Report',
@@ -52,6 +53,68 @@ Then(/I can view the (.*) algorithm summary/, (systemType: SystemType | EditedSy
         summaryTable.should('contain', algorithm.eventType);
         summaryTable.should('contain', algorithm.action);
         summaryTable.should('contain', algorithm.algorithmName);
+    });
+});
+
+Then(/I can view the (.*) algorithm actions/, (systemType: SystemType) => {
+    const algorithm = getAlgorithmBySystemType(systemType);
+    const manageAlgorithmsPage = new ManageAlgorithmsPage();
+    manageAlgorithmsPage.navigateTo();
+    manageAlgorithmsPage.clickViewAlgorithm(algorithm.algorithmName).then((viewAlgorithmPage) => {
+        // data present on both lab and case report algorithms
+        viewAlgorithmPage.setActiveTab('Action');
+        const actionDetails = viewAlgorithmPage.getActionDetailsTable();
+        actionDetails.should('contain', algorithm.action);
+        algorithm.conditions.forEach((c) => actionDetails.should('contain', c));
+        actionDetails.should('contain', algorithm.investigationType);
+        actionDetails.should('contain', algorithm.onFailureToCreate);
+
+        // investigation default values
+        if (algorithm.investigationDefaultValues) {
+            const investigationDefaultValues = viewAlgorithmPage.getInvestigationDefaultsTable();
+            algorithm.investigationDefaultValues.forEach((idv) => {
+                // The Id of the question is not displayed in the table, hence the substring
+                investigationDefaultValues.should('contain', idv.question.substring(0, idv.question.indexOf(':')));
+                investigationDefaultValues.should('contain', idv.value);
+                investigationDefaultValues.should('contain', idv.behvaior);
+            });
+        }
+        // Case report specific data
+        if (algorithm.eventType === SystemType.CASE_REPORT) {
+            // advanced criteria
+            const advancedCritera = viewAlgorithmPage.getAdvancedCriteriaTable();
+            algorithm.advancedCritera.forEach((ac) => {
+                advancedCritera.should('contain', ac.question.substring(0, ac.question.indexOf(':')));
+                advancedCritera.should('contain', ac.logic);
+                advancedCritera.should('contain', ac.value);
+            });
+        } // Lab report specific data
+        else if (algorithm.eventType === SystemType.LABORATORY_REPORT) {
+            // lab criteria logic
+            viewAlgorithmPage.getLabCriteriaLogic().should('contain', algorithm.logicMode);
+            // lab criteria section
+            const labCriteria = viewAlgorithmPage.getLabCriteriaTable();
+            algorithm.labCriteria?.forEach((l) => {
+                labCriteria.should('contain', l.resultedTest.description);
+                labCriteria.should('contain', l.resultedTest.code);
+                if (l.codedResult) {
+                    labCriteria.should('contain', l.codedResult.code);
+                    labCriteria.should('contain', l.codedResult.description);
+                }
+            });
+            // investigation criteria
+            viewAlgorithmPage
+                .getInvestigationCriteria()
+                .should('contain', algorithm.advancedCritera.length > 0 ? 'Yes' : 'No');
+
+            // advanced investigation criteria
+            const advancedInvestigationCritera = viewAlgorithmPage.getAdvancedInvestigationCriteriaTable();
+            algorithm.advancedCritera.forEach((ac) => {
+                advancedInvestigationCritera.should('contain', ac.question.substring(0, ac.question.indexOf(':')));
+                advancedInvestigationCritera.should('contain', ac.logic);
+                advancedInvestigationCritera.should('contain', ac.value);
+            });
+        }
     });
 });
 
