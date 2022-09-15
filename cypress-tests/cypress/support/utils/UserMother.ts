@@ -71,4 +71,23 @@ export default class UserMother {
             roles: []
         };
     }
+
+    public static disUser(): User {
+        return {
+            userId: 'test-dis',
+            firstName: 'test',
+            lastName: 'dis',
+            isMasterSecurityAdmin: false,
+            programAreaAdministrator: false,
+            programAreas: [],
+            roles: [
+                {
+                    jurisdiction: 'All',
+                    programArea: ProgramArea.STD,
+                    permissionSet: PermissionSet.DIS,
+                    isGuest: false
+                }
+            ]
+        };
+    }
 }
