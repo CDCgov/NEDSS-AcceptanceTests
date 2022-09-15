@@ -4,7 +4,6 @@ import { SystemType } from '../../models/enums/SystemType';
 import WorkflowAlgorithm from '../../models/WorkflowAlgorithm';
 import AddAlgorithmPage from '../../pages/system-management/decision-support-management/AddAlgorithmPage';
 import ManageAlgorithmsPage from '../../pages/system-management/decision-support-management/ManageAlgorithmsPage';
-import ViewAlgorithmPage from '../../pages/system-management/decision-support-management/ViewAlgorithmPage';
 import WorkflowAlgorithmMother from '../../utils/WorkflowAlgorithmMother';
 
 enum EditedSystemType {
@@ -84,9 +83,14 @@ Then(/I can view the (.*) algorithm actions/, (systemType: SystemType) => {
             // advanced criteria
             const advancedCritera = viewAlgorithmPage.getAdvancedCriteriaTable();
             algorithm.advancedCritera.forEach((ac) => {
-                advancedCritera.should('contain', ac.question.substring(0, ac.question.indexOf(':')));
+                const question = ac.question.substring(0, ac.question.indexOf(':'));
+                advancedCritera.should('contain', question);
                 advancedCritera.should('contain', ac.logic);
                 advancedCritera.should('contain', ac.value);
+                const detailsSection = viewAlgorithmPage.clickViewAdvancedCriteria(question);
+                detailsSection.should('contain', question);
+                detailsSection.should('contain', ac.logic);
+                detailsSection.should('contain', ac.value);
             });
         } // Lab report specific data
         else if (algorithm.eventType === SystemType.LABORATORY_REPORT) {
@@ -110,10 +114,27 @@ Then(/I can view the (.*) algorithm actions/, (systemType: SystemType) => {
             // advanced investigation criteria
             const advancedInvestigationCritera = viewAlgorithmPage.getAdvancedInvestigationCriteriaTable();
             algorithm.advancedCritera.forEach((ac) => {
-                advancedInvestigationCritera.should('contain', ac.question.substring(0, ac.question.indexOf(':')));
+                let question: string;
+                if (ac.question.indexOf(':') > -1) {
+                    question = ac.question.substring(0, ac.question.indexOf(':'));
+                } else {
+                    question = ac.question.substring(0, ac.question.indexOf('('));
+                }
+                advancedInvestigationCritera.should('contain', question);
                 advancedInvestigationCritera.should('contain', ac.logic);
                 advancedInvestigationCritera.should('contain', ac.value);
+                const detailsSection = viewAlgorithmPage.clickViewAdvancedInvestigationCriteria(question);
+                detailsSection.should('contain', question);
+                detailsSection.should('contain', ac.logic);
+                detailsSection.should('contain', ac.value);
             });
+
+            // time frame logic
+            if (algorithm.timeFrame) {
+                const timeFrameLogic = viewAlgorithmPage.getTimeFrameLogicTable();
+                timeFrameLogic.should('contain', algorithm.timeFrame.operator);
+                timeFrameLogic.should('contain', algorithm.timeFrame.value);
+            }
         }
     });
 });
