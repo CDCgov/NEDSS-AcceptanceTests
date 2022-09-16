@@ -47,6 +47,11 @@ after(() => {
                     UserUtil.deactivateUser(UserMother.elrImporter());
                 }
             });
+            UserUtil.getUserState(UserMother.nedssAdmin()).then((userState) => {
+                if (userState === 'Active') {
+                    UserUtil.deactivateUser(UserMother.nedssAdmin());
+                }
+            });
         });
     }
 });
