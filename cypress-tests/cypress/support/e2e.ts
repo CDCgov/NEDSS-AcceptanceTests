@@ -10,7 +10,8 @@ beforeEach(() => {
     cy.on('uncaught:exception', (error, runnable) => {
         return !(
             error.message.includes('Cannot read properties of undefined (reading') ||
-            error.message.includes('Cannot read properties of null (reading')
+            error.message.includes('Cannot read properties of null (reading') ||
+            error.message.includes('maxLength is not')
         );
     });
 });

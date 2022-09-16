@@ -11,6 +11,7 @@ export default defineConfig({
         },
         specPattern: 'cypress/e2e/**/*.feature',
         scrollBehavior: 'center',
-        baseUrl: 'http://localhost:7001/nbs'
+        baseUrl: 'http://localhost:7001/nbs',
+        retries: { runMode: 2, openMode: 0 }
     }
 });

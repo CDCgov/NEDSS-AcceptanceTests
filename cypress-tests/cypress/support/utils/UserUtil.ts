@@ -7,6 +7,19 @@ export default class UserUtil {
     private static defaultOptions = { log: Cypress.env('detailedLogs') };
 
     public static login(user: User): Cypress.Chainable {
+        const loginAttempt = this.doLogin(user);
+        return cy.document(this.defaultOptions).then((doc) => {
+            const nav = doc.getElementsByClassName('nedssNavTable');
+            if (nav.length === 0) {
+                // try to login again if it failed.
+                return this.doLogin(user);
+            } else {
+                return loginAttempt;
+            }
+        });
+    }
+
+    private static doLogin(user: User): Cypress.Chainable<Cypress.AUTWindow> {
         return cy.visit(`/nfc?UserName=${user.userId}`, this.defaultOptions);
     }
 
