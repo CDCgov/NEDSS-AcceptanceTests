@@ -79,6 +79,25 @@ export default class UserMother {
         };
     }
 
+    public static nedssAdmin(): User {
+        return {
+            userId: 'test-nedss-admin',
+            firstName: 'Nedss',
+            lastName: 'Admin',
+            isMasterSecurityAdmin: false,
+            programAreaAdministrator: true,
+            programAreas: [],
+            roles: [
+                {
+                    jurisdiction: 'All',
+                    programArea: ProgramArea.ARBO,
+                    permissionSet: PermissionSet.NEDSS_SYSTEM_ADMIN,
+                    isGuest: false
+                }
+            ]
+        };
+    }
+
     public static systemAdmin(): User {
         return {
             userId: 'msa',
