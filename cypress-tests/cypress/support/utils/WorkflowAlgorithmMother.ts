@@ -46,6 +46,7 @@ export default class WorkflowAlgorithmMother {
             conditions: ['Varicella'],
             onFailureToCreate: 'Retain Event Record',
             logicMode: 'OR',
+            timeFrame: { operator: '<', value: '30' },
             labCriteria: [
                 {
                     resultedTest: Test.ACID_FAST_STAIN,
