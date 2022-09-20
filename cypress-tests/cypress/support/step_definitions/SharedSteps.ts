@@ -28,6 +28,12 @@ Given(/I am a (.*) user/, (userType: 'data entry' | 'admin' | 'supervisor' | 're
             });
             UserUtil.login(UserMother.registryManager());
             break;
+        case 'dis':
+            UserUtil.login(UserMother.systemAdmin()).then(() => {
+                UserUtil.createOrActivateUser(UserMother.disUser());
+            });
+            UserUtil.login(UserMother.disUser());
+            break;
     }
 });
 
