@@ -3,8 +3,8 @@ Feature: Contact Attachment
   Scenario Outline: Add and retrieve a file attachment for a contact
     Given I am a dis user
     When I upload a contact "<attachment>" with the following "<name>" and "<description>"
-    Then It is stored with the contact and can be viewed
+    Then I can see the "<name>" and "<description>" in the list
 
-    Examples: 
+    Examples:
       | attachment                 | name            | description      |
-      | contact_attachment.pdf     | Test Attachment | Test description |
+      | Test_Word_Doc.docx         | Test Attachment | Test description |
