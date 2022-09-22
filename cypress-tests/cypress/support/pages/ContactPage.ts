@@ -9,6 +9,7 @@ enum Selector {
 
 export default class ContactPage extends BasePage {
     constructor() {
+        //TODO - Update relative url below for actual data. This worked with a manual data setup.
         super('/ContactTracing.do?method=viewContact&contactRecordUid=10011330&mode=View&Action=DSInvestigationPath&DSInvestigationCondition=10680');
     }
 
@@ -39,13 +40,11 @@ export default class ContactPage extends BasePage {
     }
 
     clickSupplementalInfoTab(): void {
-        this.clickFirst('td[id=tabs0head3]');
-        console.log('ContactPage:clickSupplementalInfoTab');
+        this.clickFirst('td[id=tabs0head3]');;
     }
 
     clickAddAttachmentButton(): void {
         this.click('input[value="Add Attachment"]');
-        console.log('ContactPage:clickAddAttachmentButton');
     }
 
     clickFileAttachmentSubmit(): void {

@@ -1,6 +1,7 @@
 import Patient from '../models/Patient';
 import AddLabReportPage from './AddLabReportPage';
 import BasePage from './BasePage';
+import SelectConditionPage from './SelectConditionPage';
 
 enum Selector {
     PATIENT_SUMMARY_TABLE = 'div[id=subsect_basicInfo] table[id=Summary_summary]',
@@ -9,7 +10,9 @@ enum Selector {
     EVENTS_TAB = 'td[id=tabs0head1]',
     DEMOGRAPHICS_TAB = 'td[id=tabs0head2]',
     ADD_LAB_REPORT_BUTTON = 'div[id=subsect_Lab] input[name=Add]',
-    DOCUMENTS_REQUIRING_REVIEW_DIV = 'div[id=subsect_Reports]'
+    DOCUMENTS_REQUIRING_REVIEW_DIV = 'div[id=subsect_Reports]',
+    EVENTS_TAB = 'td[id=tabs0head1]',
+    ADD_NEW_BUTTON = 'input[name=Add]'
 }
 export class PatientFilePage extends BasePage {
     constructor(patientId: string) {
@@ -60,5 +63,19 @@ export class PatientFilePage extends BasePage {
             }
             return cy.wrap(labReportLinks);
         });
+    }
+
+    clickOpenInvestigations(): OpenInvestigationsQueuePage {
+        cy.get('a').contains('Open Investigations').click();
+        return new OpenInvestigationsQueuePage();
+    }
+
+    clickEventsTab(): void {
+        cy.get(Selector.EVENTS_TAB).first().click();
+    }
+
+    clickInvestigationsAddNewButton(): SelectConditionPage {
+        cy.get(Selector.ADD_NEW_BUTTON).first().click();
+        return new SelectConditionPage();
     }
 }
